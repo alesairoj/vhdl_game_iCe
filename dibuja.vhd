@@ -25,6 +25,7 @@ begin
   process(eje_x, eje_y, button_up, cx, cy)
   begin
 
+    buttons <= button_up & button_down & button_left & button_right;
     R <= '0';
     G <= '0';
     B <= '0';
@@ -33,6 +34,10 @@ begin
       R <= '1';
       B <= '1';
     end if;
+
+    if (buttons = "1000") then
+      cx:=cx+1;
+      end if;
 
   end process;
 end Behavioral;
