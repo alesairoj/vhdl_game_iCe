@@ -23,21 +23,27 @@ begin
 
 	process(eje_x, eje_y)
 	begin
-            buttons <= button_up & button_down & button_left & button_right;
-           case buttons is
-               when "0000" =>
+--            buttons <= button_up & button_down & button_left & button_right;
+--           case buttons is
+--               when "0000" =>
+--                   R <= '1'; G <= '0'; B <= '0';
+--               when "0001" =>
+--                   R <= '0'; G <= '1'; B <= '0';
+--               when "0010" =>
+--                   R <= '0'; G <= '0'; B <= '1';
+--               when "0100" =>
+--                   R <= '0'; G <= '1'; B <= '1';
+--               when "1000" =>
+--                   R <= '1'; G <= '1'; B <= '0';
+--               when others =>
+--                   R <= '1'; G <= '1'; B <= '1';
+--           end case;
+
+		if (eje_X >= 100) AND (eje_X <= 150) AND (eje_y >= 100) AND (eje_y <= 150) then
                    R <= '1'; G <= '0'; B <= '0';
-               when "0001" =>
-                   R <= '0'; G <= '1'; B <= '0';
-               when "0010" =>
-                   R <= '0'; G <= '0'; B <= '1';
-               when "0100" =>
-                   R <= '0'; G <= '1'; B <= '1';
-               when "1000" =>
+	   else
                    R <= '1'; G <= '1'; B <= '0';
-               when others =>
-                   R <= '1'; G <= '1'; B <= '1';
-           end case;
+	   end if;
 --	if((to_integer(unsigned(eje_y)) > 119) and (to_integer(unsigned(eje_y)) <359)) then
 --		R<='1'; G<='1'; B<='0';
 --	else
