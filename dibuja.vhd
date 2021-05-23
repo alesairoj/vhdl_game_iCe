@@ -39,7 +39,7 @@ begin
 --                   R <= '1'; G <= '1'; B <= '1';
 --           end case;
 
-		if (eje_X >= 100) AND (eje_X <= 150) AND (eje_y >= 100) AND (eje_y <= 150) then
+          if (to_integer(unsigned(eje_X)) >= 100) AND (to_integer(unsigned(eje_X)) <= 150) AND (to_integer(unsigned(eje_y)) >= 100) AND (to_integer(unsigned(eje_y)) <= 150) then
                    R <= '1'; G <= '0'; B <= '0';
 	   else
                    R <= '1'; G <= '1'; B <= '0';
