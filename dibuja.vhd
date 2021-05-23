@@ -18,37 +18,21 @@ end dibuja;
 architecture Behavioral of dibuja is
 	signal p_O1, p_O2, p_O3 : STD_LOGIC;
         signal buttons : std_logic_vector(3 downto 0);
-
+        signal cx      : integer range 0 to 15 := 5;
+        signal cy      : integer range 0 to 15 := 5;
 begin
 
-	process(eje_x, eje_y)
-	begin
---            buttons <= button_up & button_down & button_left & button_right;
---           case buttons is
---               when "0000" =>
---                   R <= '1'; G <= '0'; B <= '0';
---               when "0001" =>
---                   R <= '0'; G <= '1'; B <= '0';
---               when "0010" =>
---                   R <= '0'; G <= '0'; B <= '1';
---               when "0100" =>
---                   R <= '0'; G <= '1'; B <= '1';
---               when "1000" =>
---                   R <= '1'; G <= '1'; B <= '0';
---               when others =>
---                   R <= '1'; G <= '1'; B <= '1';
---           end case;
+  process(eje_x, eje_y, button_up, cx, cy)
+  begin
 
-          if (to_integer(unsigned(eje_X)) >= 100) AND (to_integer(unsigned(eje_X)) <= 150) AND (to_integer(unsigned(eje_y)) >= 100) AND (to_integer(unsigned(eje_y)) <= 150) then
-                   R <= '1'; G <= '0'; B <= '0';
-	   else
-                   R <= '1'; G <= '1'; B <= '0';
-	   end if;
---	if((to_integer(unsigned(eje_y)) > 119) and (to_integer(unsigned(eje_y)) <359)) then
---		R<='1'; G<='1'; B<='0';
---	else
---		R<='1'; G<='0'; B<='0';
---	end if;
-	end process;
+    R <= '0';
+    G <= '0';
+    B <= '0';
 
+    if ((to_integer(unsigned(eje_x)) > 320) and (to_integer(unsigned(eje_x)) < 320 + cx) and (to_integer(unsigned(eje_y)) > 240) and (to_integer(unsigned(eje_y)) < 240 + cy)) then
+      R <= '1';
+      B <= '1';
+    end if;
+
+  end process;
 end Behavioral;
