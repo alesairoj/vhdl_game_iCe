@@ -22,7 +22,7 @@ architecture Behavioral of vga_driver is
 	signal Blank_x, Blank_y : STD_LOGIC;
 	signal enable_contY : STD_LOGIC;
 	signal R_in, G_in, B_in : STD_LOGIC;
-
+	signal VSsignal : STD_LOGIC;
 
 
 	signal eje_x, eje_y : STD_LOGIC_VECTOR (9 downto 0);
@@ -113,9 +113,10 @@ begin
 		  reset => reset,
 		  data => eje_y,
 		  O1 => Blank_y,
-		  O2 => VS,
+		  O2 => VSsignal,
 		  O3 => O3_compY
 	  );
+	VS <= VSsignal;
 
 	cuadrado_instancia: cuadrado
 	port map (eje_x => eje_x,
@@ -126,7 +127,7 @@ begin
 		  R => R_in,
 		  G => G_in,
 		  B => B_in,
-                  clk => clk,
+                  clk => VSsignal,
                   reset  => reset
 	  );
 

@@ -36,7 +36,7 @@ prog: top.bin
 clean:
 	rm -f *.json *.asc *.bin
 	rm -f *.o work-obj??.cf
-	rm -f tb_vgadriver tb_vgadriver.ghw
+	rm -f tb_vgadriver tb_vgadriver.ghw write.txt
 
 .PHONY: all prog clean
 
