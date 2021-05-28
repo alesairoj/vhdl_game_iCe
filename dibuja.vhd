@@ -18,8 +18,12 @@ end dibuja;
 architecture Behavioral of dibuja is
 	signal p_O1, p_O2, p_O3 : STD_LOGIC;
         signal buttons : std_logic_vector(3 downto 0);
+	signal X, Y : unsigned (9 downto 0);
 
 begin
+
+	X <= unsigned(eje_x);
+	Y <= unsigned(eje_y);
 
 	process(eje_x, eje_y)
 	begin
@@ -39,7 +43,7 @@ begin
 --                   R <= '1'; G <= '1'; B <= '1';
 --           end case;
 
-		if (eje_X >= 100) AND (eje_X <= 150) AND (eje_y >= 100) AND (eje_y <= 150) then
+		if (X > 100) AND (X < 150) AND (Y > 100) AND (Y < 150) then
                    R <= '1'; G <= '0'; B <= '0';
 	   else
                    R <= '1'; G <= '1'; B <= '0';
