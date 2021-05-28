@@ -6,11 +6,11 @@ sim: tb_vgadriver.ghw
 %.o: %.vhd
 	ghdl -a $<
 
-tb_vgadriver: contador.o comparador.o dibuja.o vgadriver.o tb_vgadriver.o
+tb_vgadriver: cuadrado.o contador.o comparador.o dibuja.o vgadriver.o tb_vgadriver.o
 	ghdl -e tb_vgadriver
 
 tb_vgadriver.ghw: tb_vgadriver
-	./tb_vgadriver --wave=tb_vgadriver.ghw
+	./tb_vgadriver --wave=tb_vgadriver.ghw --stop-time=20ms
 
 # Generate simulation executable
 #tb_vga_driver.vhd: tb_vga_driver.o
@@ -18,7 +18,7 @@ tb_vgadriver.ghw: tb_vgadriver
 
 # Synthesize
 top.json: top.vhd
-	yosys -m ghdl -p 'ghdl contador.vhd comparador.vhd dibuja.vhd vgadriver.vhd top.vhd -e top; synth_ice40 -json top.json'
+	yosys -m ghdl -p 'ghdl contador.vhd comparador.vhd cuadrado.vhd vgadriver.vhd top.vhd -e top; synth_ice40 -json top.json'
 
 # Place and route
 top.asc: top.json
