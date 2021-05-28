@@ -6,8 +6,7 @@ entity vga_driver is
 	Port (
 		     clk : in STD_LOGIC;
 		     reset : in STD_LOGIC;
-                     button_up    : in std_logic;
-                     button_down  : in std_logic;
+                     button_center  : in std_logic;
                      button_left  : in std_logic;
                      button_right : in std_logic;
 		     VS : out STD_LOGIC;
@@ -52,15 +51,16 @@ architecture Behavioral of vga_driver is
 			 O3 : out STD_LOGIC);
 	end component;
 
-	component dibuja is
+	component cuadrado is
 		Port (
-                    button_up    : in std_logic;
-                    button_down  : in std_logic;
-                    button_left  : in std_logic;
+                    button_left    : in std_logic;
+                    button_center  : in std_logic;
                     button_right : in std_logic;
                     R : out STD_LOGIC;
                     G : out STD_LOGIC;
                     B : out STD_LOGIC;
+		reset : in STD_LOGIC;
+		clk : in STD_LOGIC;
                     eje_x : in STD_LOGIC_VECTOR (9 downto 0);
                     eje_y : in STD_LOGIC_VECTOR (9 downto 0));
 	end component;
@@ -117,16 +117,17 @@ begin
 		  O3 => O3_compY
 	  );
 
-	dibuja_instancia: dibuja
+	cuadrado_instancia: cuadrado
 	port map (eje_x => eje_x,
 		  eje_y => eje_y,
-                  button_up    => button_up,
-                  button_down  => button_down,
-                  button_left  => button_left,
+                  button_left    => button_left,
+                  button_center  => button_center,
                   button_right => button_right,
 		  R => R_in,
 		  G => G_in,
-		  B => B_in
+		  B => B_in,
+                  clk => clk,
+                  reset  => reset
 	  );
 
 
