@@ -19,6 +19,9 @@ ARCHITECTURE behavior OF tb_vgadriver IS
 		PORT(
 			    clk : IN  std_logic;
 			    reset : IN  std_logic;
+			    button_center : IN  std_logic;
+			    button_left : IN  std_logic;
+			    button_right : IN  std_logic;
 			    VS: OUT std_logic;
 			    HS: OUT std_logic;
 			    R: OUT std_logic;
@@ -37,6 +40,9 @@ ARCHITECTURE behavior OF tb_vgadriver IS
 	signal R : std_logic;
 	signal G : std_logic;
 	signal B : std_logic;
+	signal button_center : std_logic;
+	signal button_left : std_logic;
+	signal button_right : std_logic;
 	-- Clock period definitions
 	constant clk_period : time := 20 ns;
 
@@ -52,6 +58,9 @@ BEGIN
 	PORT MAP (
 			 clk => clk,
 			 reset => reset,
+			 button_center => button_center,
+			 button_left => button_left,
+			 button_right => button_right,
 			 VS => VS,
 			 HS => HS,
 			 R => R,
@@ -82,6 +91,10 @@ BEGIN
 
 		wait;
 	end process;
+
+		button_center <= '0';
+		button_left <= '0';
+		button_right <= '0';
 
 	VSt <= 1 when (VS='1') else 0;
 	HSt <= 1 when (HS='1') else 0;

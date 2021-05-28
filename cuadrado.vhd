@@ -6,7 +6,7 @@ entity cuadrado is
 	Port (
 		     button_left : in STD_LOGIC;
 		     button_center : in STD_LOGIC;
-		     button_rigth : in STD_LOGIC;
+		     button_right : in STD_LOGIC;
 		     R            : out STD_LOGIC;
 		     G            : out STD_LOGIC;
 		     B            : out STD_LOGIC;
@@ -22,6 +22,7 @@ architecture Behavioral of cuadrado is
 	signal buttons : std_logic_vector(2 downto 0);
 	signal X, Y : unsigned (9 downto 0);
 	signal xini, yini : unsigned (9 downto 0);
+	signal xinivec, yinivec : STD_LOGIC_VECTOR ( 9 downto 0);
 
 	component contador is
 		Generic (Nbit : INTEGER :=8);
@@ -39,20 +40,21 @@ begin
         generic map (Nbit => 10)
         port map (clk => clk,
                   reset => reset,
-                  resets => open,
-                  enable => button_rigth,
-                  Q => xini
+                  resets => '0',
+                  enable => button_right,
+                  Q => xinivec
           );
         contador_yini: contador
         generic map (Nbit => 10)
         port map (clk => clk,
                   reset => reset,
-                  resets => open,
+                  resets => '0',
                   enable => button_center,
-                  Q => yini
+                  Q => yinivec
           );
 
-
+yini <= unsigned(yinivec);
+xini <= unsigned(xinivec);
 	X <= unsigned(eje_x);
 	Y <= unsigned(eje_y);
 	buttons <= button_left & button_center & button_right;
