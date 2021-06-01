@@ -35,9 +35,15 @@ begin
 			p_salida <= (others => '0');
 
 		elsif (enable = '1') then
-			if (sentido ='1') then
+                  if (sentido ='1') then
+                    if (salida = "1111111") then
+                      p_salida <= salida;
+                    end if;
 				p_salida <= salida + 1;
-			else
+                  else
+                    if (salida = "0000000") then
+                      p_salida <= salida;
+                    end if;
 				p_salida <= salida - 1;
 			end if;
 		else
