@@ -23,25 +23,38 @@ architecture Behavioral of cuadrado is
 	signal X, Y : unsigned (9 downto 0);
 	signal xini, yini : unsigned (9 downto 0);
 	signal xinivec, yinivec : STD_LOGIC_VECTOR ( 9 downto 0);
+	signal enctud : STD_LOGIC;
+
+	component ctud is
+		Generic (Nbit : INTEGER :=8);
+		port( clk : in  STD_LOGIC;
+		      reset : in  STD_LOGIC;
+		      enable : in STD_LOGIC;
+		      resets : in STD_LOGIC;
+		      sentido : in  STD_LOGIC;
+		      Q : out  STD_LOGIC_VECTOR ((Nbit - 1) downto 0));
+	end component;
+
 
 	component contador is
 		Generic (Nbit : INTEGER :=8);
 		port( clk : in  STD_LOGIC;
 		      reset : in  STD_LOGIC;
+		      enable : in STD_LOGIC;
 		      resets : in STD_LOGIC;
-		      enable : in  STD_LOGIC;
 		      Q : out  STD_LOGIC_VECTOR ((Nbit - 1) downto 0));
 	end component;
-
-
 begin
 
-        contador_xini: contador
+	enctud <= button_left XOR button_right;
+	
+        contador_xini: ctud
         generic map (Nbit => 10)
         port map (clk => clk,
                   reset => reset,
                   resets => '0',
-                  enable => button_right,
+                  enable => enctud,
+                  sentido => button_right,
                   Q => xinivec
           );
         contador_yini: contador
