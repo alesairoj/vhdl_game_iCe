@@ -10,50 +10,50 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-entity contador is
-  Generic (Nbit: INTEGER := 8);
-  Port ( clk : in STD_LOGIC;
-         reset : in STD_LOGIC;
-         enable : in STD_LOGIC;
-         resets : in STD_LOGIC;
-         sentido : in STD_LOGIC;
-         Q : out STD_LOGIC_VECTOR (Nbit-1 downto 0));
-end contador;
+entity ctud is
+	Generic (Nbit: INTEGER := 8);
+	Port ( clk : in STD_LOGIC;
+	       reset : in STD_LOGIC;
+	       enable : in STD_LOGIC;
+	       resets : in STD_LOGIC;
+	       sentido : in STD_LOGIC;
+	       Q : out STD_LOGIC_VECTOR (Nbit-1 downto 0));
+end ctud;
 
-architecture Behavioral of contador is
+architecture Behavioral of ctud is
 
-  signal salida, p_salida: unsigned(Nbit-1 downto 0);
+	signal salida, p_salida: unsigned(Nbit-1 downto 0);
 
 begin
 
-  Q <= std_logic_vector(salida);
+	Q <= std_logic_vector(salida);
 
-  comb: process(salida,enable,sentido)
-  begin
-    p_salida <= salida;
-    if (resets = '1') then
-        p_salida <= (others => '0');
+	comb: process(salida,enable,sentido)
+	begin
+		p_salida <= salida;
+		if (resets = '1') then
+			p_salida <= (others => '0');
 
-    elsif (enable = '1') then
-      if (sentido ='1') then
-        p_salida <= salida + 1;
-      else
-        p_salida <= salida - 1;
+		elsif (enable = '1') then
+			if (sentido ='1') then
+				p_salida <= salida + 1;
+			else
+				p_salida <= salida - 1;
+			end if;
+		else
+			p_salida <= salida;
+		end if;
 
-      else
-        p_salida <= salida;
-    end if;
+	end process;
 
-  end process;
+	sinc: process(resets, clk)
+	begin
+		if (reset = '1') then
+			salida <= (others => '0');
+		elsif (rising_edge(clk)) then
+			salida <= p_salida;
+		end if;
 
-  sinc: process(resets, clk)
-  begin
-    if (reset = '1') then
-      salida <= (others => '0');
-    elsif (rising_edge(clk)) then
-      salida <= p_salida;
-    end if;
-
-  end process;
+	end process;
 
 end Behavioral;

@@ -18,7 +18,7 @@ tb_vgadriver.ghw: tb_vgadriver
 
 # Synthesize
 top.json: top.vhd
-	yosys -m ghdl -p 'ghdl contador.vhd comparador.vhd cuadrado.vhd vgadriver.vhd top.vhd -e top; synth_ice40 -json top.json'
+	yosys -m ghdl -p 'ghdl ctud.vhd contador.vhd comparador.vhd cuadrado.vhd vgadriver.vhd top.vhd -e top; synth_ice40 -json top.json'
 
 # Place and route
 top.asc: top.json
