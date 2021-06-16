@@ -6,7 +6,7 @@ sim: tb_vgadriver.ghw
 %.o: %.vhd
 	ghdl -a $<
 
-tb_vgadriver: cuadrado.o contador.o comparador.o dibuja.o vgadriver.o tb_vgadriver.o
+tb_vgadriver: cuadrado.o contador.o comparador.o dibuja.o vgadriver.o tb_vgadriver.o enemigo.o
 	ghdl -e tb_vgadriver
 
 tb_vgadriver.ghw: tb_vgadriver
@@ -18,7 +18,7 @@ tb_vgadriver.ghw: tb_vgadriver
 
 # Synthesize
 top.json: top.vhd
-	yosys -m ghdl -p 'ghdl ctud.vhd contador.vhd comparador.vhd cuadrado.vhd vgadriver.vhd top.vhd -e top; synth_ice40 -json top.json'
+	yosys -m ghdl -p 'ghdl ctud.vhd enemigo.vhd contador.vhd comparador.vhd cuadrado.vhd vgadriver.vhd top.vhd -e top; synth_ice40 -json top.json'
 
 # Place and route
 top.asc: top.json
@@ -39,4 +39,3 @@ clean:
 	rm -f tb_vgadriver tb_vgadriver.ghw write.txt
 
 .PHONY: all prog clean
-

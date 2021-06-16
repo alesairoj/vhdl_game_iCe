@@ -51,19 +51,31 @@ architecture Behavioral of vga_driver is
 			 O3 : out STD_LOGIC);
 	end component;
 
-	component cuadrado is
-		Port (
-                    button_left    : in std_logic;
-                    button_center  : in std_logic;
-                    button_right : in std_logic;
-                    R : out STD_LOGIC;
-                    G : out STD_LOGIC;
-                    B : out STD_LOGIC;
-		reset : in STD_LOGIC;
-		clk : in STD_LOGIC;
-                    eje_x : in STD_LOGIC_VECTOR (9 downto 0);
-                    eje_y : in STD_LOGIC_VECTOR (9 downto 0));
+	component enemigo is
+          Port (
+            R : out STD_LOGIC;
+            G : out STD_LOGIC;
+            B : out STD_LOGIC;
+            reset : in STD_LOGIC;
+            clk : in STD_LOGIC;
+            eje_x : in STD_LOGIC_VECTOR (9 downto 0);
+            eje_y : in STD_LOGIC_VECTOR (9 downto 0));
 	end component;
+
+
+	-- component cuadrado is
+	-- 	Port (
+        --             button_left    : in std_logic;
+        --             button_center  : in std_logic;
+        --             button_right : in std_logic;
+        --             R : out STD_LOGIC;
+        --             G : out STD_LOGIC;
+        --             B : out STD_LOGIC;
+	-- 	reset : in STD_LOGIC;
+	-- 	clk : in STD_LOGIC;
+        --             eje_x : in STD_LOGIC_VECTOR (9 downto 0);
+        --             eje_y : in STD_LOGIC_VECTOR (9 downto 0));
+	-- end component;
 
 begin
 
@@ -118,12 +130,9 @@ begin
 	  );
 	VS <= VSsignal;
 
-	cuadrado_instancia: cuadrado
+	enemigo_instancia: enemigo
 	port map (eje_x => eje_x,
 		  eje_y => eje_y,
-                  button_left    => button_left,
-                  button_center  => button_center,
-                  button_right => button_right,
 		  R => R_in,
 		  G => G_in,
 		  B => B_in,
