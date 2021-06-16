@@ -38,13 +38,17 @@ begin
                   if (sentido ='1') then
                     if (salida = "1111111") then
                       p_salida <= salida;
+                    else
+                      p_salida <= salida + 1;
                     end if;
-				p_salida <= salida + 1;
+				--p_salida <= salida + 1;
                   else
                     if (salida = "0000000") then
                       p_salida <= salida;
+                    else
+                      p_salida <= salida - 1;
                     end if;
-				p_salida <= salida - 1;
+				--p_salida <= salida - 1;
 			end if;
 		else
 			p_salida <= salida;
