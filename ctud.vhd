@@ -11,7 +11,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity ctud is
-	Generic (Nbit: INTEGER := 8);
+	Generic (Nbit: INTEGER := 7);
 	Port ( clk : in STD_LOGIC;
 	       reset : in STD_LOGIC;
 	       enable : in STD_LOGIC;
@@ -36,15 +36,23 @@ begin
 
 		elsif (enable = '1') then
                   if (sentido ='1') then
+<<<<<<< HEAD
                     if (salida = "00000011") then
+=======
+                    if (salida = "111111") then
+>>>>>>> carlos
                       p_salida <= salida;
+                    else
+                      p_salida <= salida + 1;
                     end if;
-				p_salida <= salida + 1;
+				--p_salida <= salida + 1;
                   else
-                    if (salida = "0000000") then
+                    if (salida = "000000") then
                       p_salida <= salida;
+                    else
+                      p_salida <= salida - 1;
                     end if;
-				p_salida <= salida - 1;
+				--p_salida <= salida - 1;
 			end if;
 		else
 			p_salida <= salida;
