@@ -1,3 +1,6 @@
+-- Caracteristicas de la pantalla:
+-- 640 x 480
+-- 60 Hz
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
