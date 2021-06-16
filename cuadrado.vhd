@@ -47,7 +47,7 @@ architecture Behavioral of cuadrado is
 begin
 
 	enctud <= button_left XOR button_right;
-	
+
         contador_xini: ctud
         generic map (Nbit => 10)
         port map (clk => clk,
@@ -67,7 +67,7 @@ begin
           );
 
 yini <= unsigned(yinivec);
-xini <= unsigned(xinivec);
+xini <= unsigned(xinivec)+260;
 	X <= unsigned(eje_x);
 	Y <= unsigned(eje_y);
 	buttons <= button_left & button_center & button_right;
