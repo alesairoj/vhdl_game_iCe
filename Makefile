@@ -6,11 +6,19 @@ sim: tb_vgadriver.ghw
 %.o: %.vhd
 	ghdl -a $<
 
-tb_vgadriver: cuadrado.o contador.o comparador.o dibuja.o vgadriver.o tb_vgadriver.o enemigo.o
+tb_vgadriver: cuadrado.o contador.o comparador.o dibuja.o vgadriver.o tb_vgadriver.o ctud.o enemigo.o
+
 	ghdl -e tb_vgadriver
 
 tb_vgadriver.ghw: tb_vgadriver
 	./tb_vgadriver --wave=tb_vgadriver.ghw --stop-time=20ms
+
+tb_ctud: cuadrado.o contador.o comparador.o dibuja.o vgadriver.o tb_vgadriver.o ctud.o tb_ctud.o
+	ghdl -e tb_ctud
+
+tb_ctud.ghw: tb_ctud
+	./tb_ctud --wave=tb_ctud.ghw --stop-time=350ms
+
 
 # Generate simulation executable
 #tb_vga_driver.vhd: tb_vga_driver.o
