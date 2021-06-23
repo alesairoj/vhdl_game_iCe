@@ -88,7 +88,7 @@ xini <= unsigned(xinivec)+260;
 	process(X, Y)
 	begin
 
-		if (X > xini) AND (X < (xini + 15)) AND (Y > yini) AND (Y < (yini + 15)) then
+		if (X > 260) AND (X < (260 + 15)) AND (Y > yini) AND (Y < (yini + 15)) then
 			R <= '0'; G <= '0'; B <= '0';
 		else
 			R <= '1'; G <= '1'; B <= '1';
