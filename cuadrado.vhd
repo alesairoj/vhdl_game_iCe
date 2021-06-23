@@ -90,9 +90,9 @@ xini <= unsigned(xinivec)+260;
 		--           end case;
 
 		if (X > xini) AND (X < (xini + 50)) AND (Y > yini) AND (Y < (yini + 50)) then
-			R <= '1'; G <= '0'; B <= '0';
+			R <= '0'; G <= '1'; B <= '0';
 		else
-			R <= '1'; G <= '1'; B <= '0';
+			R <= '0'; G <= '0'; B <= '0';
 		end if;
 	--	if((to_integer(unsigned(eje_y)) > 119) and (to_integer(unsigned(eje_y)) <359)) then
 	--		R<='1'; G<='1'; B<='0';

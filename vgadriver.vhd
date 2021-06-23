@@ -6,9 +6,9 @@ entity vga_driver is
 	Port (
 		     clk : in STD_LOGIC;
 		     reset : in STD_LOGIC;
-                     button_center  : in std_logic;
-                     button_left  : in std_logic;
-                     button_right : in std_logic;
+		     button_center  : in std_logic;
+		     button_left  : in std_logic;
+		     button_right : in std_logic;
 		     VS : out STD_LOGIC;
 		     HS : out STD_LOGIC;
 		     R : out STD_LOGIC;
@@ -23,6 +23,11 @@ architecture Behavioral of vga_driver is
 	signal enable_contY : STD_LOGIC;
 	signal R_in, G_in, B_in : STD_LOGIC;
 	signal VSsignal : STD_LOGIC;
+
+	--Señales enemigos
+	signal R_en1, G_en1, B_en1 : STD_LOGIC;
+	signal R_player, G_player, B_player : STD_LOGIC;
+
 
 
 	signal eje_x, eje_y : STD_LOGIC_VECTOR (9 downto 0);
@@ -52,30 +57,43 @@ architecture Behavioral of vga_driver is
 	end component;
 
 	component enemigo is
-          Port (
-            R : out STD_LOGIC;
-            G : out STD_LOGIC;
-            B : out STD_LOGIC;
-            reset : in STD_LOGIC;
-            clk : in STD_LOGIC;
-            eje_x : in STD_LOGIC_VECTOR (9 downto 0);
-            eje_y : in STD_LOGIC_VECTOR (9 downto 0));
+		Port (
+			     R : out STD_LOGIC;
+			     G : out STD_LOGIC;
+			     B : out STD_LOGIC;
+			     reset : in STD_LOGIC;
+			     clk : in STD_LOGIC;
+			     eje_x : in STD_LOGIC_VECTOR (9 downto 0);
+			     eje_y : in STD_LOGIC_VECTOR (9 downto 0));
 	end component;
 
 
-	-- component cuadrado is
-	-- 	Port (
-        --             button_left    : in std_logic;
-        --             button_center  : in std_logic;
-        --             button_right : in std_logic;
-        --             R : out STD_LOGIC;
-        --             G : out STD_LOGIC;
-        --             B : out STD_LOGIC;
-	-- 	reset : in STD_LOGIC;
-	-- 	clk : in STD_LOGIC;
-        --             eje_x : in STD_LOGIC_VECTOR (9 downto 0);
-        --             eje_y : in STD_LOGIC_VECTOR (9 downto 0));
-	-- end component;
+	component cuadrado is
+		Port (
+			     button_left    : in std_logic;
+			     button_center  : in std_logic;
+			     button_right : in std_logic;
+			     R : out STD_LOGIC;
+			     G : out STD_LOGIC;
+			     B : out STD_LOGIC;
+			     reset : in STD_LOGIC;
+			     clk : in STD_LOGIC;
+			     eje_x : in STD_LOGIC_VECTOR (9 downto 0);
+			     eje_y : in STD_LOGIC_VECTOR (9 downto 0));
+	end component;
+
+	component selector is
+		Port (
+			     R_en1 : in STD_LOGIC;
+			     G_en1 : in STD_LOGIC;
+			     B_en1 : in STD_LOGIC;
+			     R_player : in STD_LOGIC;
+			     G_player : in STD_LOGIC;
+			     B_player : in STD_LOGIC;
+			     R            : out STD_LOGIC;
+			     G            : out STD_LOGIC;
+			     B            : out STD_LOGIC);
+	end component;
 
 begin
 
@@ -130,14 +148,39 @@ begin
 	  );
 	VS <= VSsignal;
 
+	selector_instancia: selector
+	port map (R_en1 => R_en1,
+		  G_en1 => G_en1,
+		  B_en1 => B_en1,
+		  R_player => R_player,
+		  G_player => G_player,
+		  B_player => B_player,
+		  R => R_in,
+		  G => G_in,
+		  B => B_in
+	  );
+
+	player:cuadrado
+	port map (button_left => button_left,
+		  button_center => button_center, 
+		  button_right =>button_right, 
+		  R =>R_player, 
+		  G =>G_player,
+		  B =>B_player,
+		  reset =>reset,
+		  clk =>clk,
+		  eje_x =>eje_x,
+		  eje_y =>eje_y
+	  );
+
 	enemigo_instancia: enemigo
 	port map (eje_x => eje_x,
 		  eje_y => eje_y,
-		  R => R_in,
-		  G => G_in,
-		  B => B_in,
-                  clk => VSsignal,
-                  reset  => reset
+		  R => R_en1,
+		  G => G_en1,
+		  B => B_en1,
+		  clk => VSsignal,
+		  reset  => reset
 	  );
 
 
