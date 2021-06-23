@@ -36,10 +36,10 @@ begin
 	
 	process(enemigo1, player)
 	begin
-		if ( enemigo1 /= "000" and player /= "000") then
-			RGB<= enemigo1 OR player; --meter el fondo de pantalla
+		if ( (enemigo1 /= "111") and (player /= "111")) then
+			RGB<="100"; --colision
 		else
-			RGB<="100";
+			RGB<= enemigo1 AND player; --no colision
 		end if;
 	end process;
 
