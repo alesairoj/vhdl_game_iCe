@@ -29,13 +29,17 @@ begin
 
 	enemigo1 <= R_en1 & G_en1 & B_en1;
 	player <= R_player & G_player & B_player;
+	R <= RGB(2);
+	G <= RGB(1);
+	B <= RGB(0);
+	
 	
 	process(enemigo1, player)
 	begin
 		if ( enemigo1 /= "000" and player /= "000") then
-			RGB<="100";
+			RGB<= enemigo1 OR player; --meter el fondo de pantalla
 		else
-			RGB<= enemigo1 OR player;
+			RGB<="100";
 		end if;
 	end process;
 

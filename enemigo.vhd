@@ -91,7 +91,7 @@ xini <= unsigned(xinivec)+260;
 		if (X > xini) AND (X < (xini + 15)) AND (Y > yini) AND (Y < (yini + 15)) then
 			R <= '0'; G <= '0'; B <= '0';
 		else
-			R <= '1'; G <= '1'; B <= '0';
+			R <= '1'; G <= '1'; B <= '1';
 		end if;
 
 	end process;
