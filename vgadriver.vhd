@@ -25,7 +25,7 @@ architecture Behavioral of vga_driver is
 	signal VSsignal : STD_LOGIC;
 
 	--Señales enemigos
-	signal R_en1, G_en1, B_en1 : STD_LOGIC;
+	signal R_en1, G_en1, B_en1, R_en2, G_en2, B_en2 : STD_LOGIC;
 	signal R_player, G_player, B_player : STD_LOGIC;
 
 
@@ -87,6 +87,9 @@ architecture Behavioral of vga_driver is
 			     R_en1 : in STD_LOGIC;
 			     G_en1 : in STD_LOGIC;
 			     B_en1 : in STD_LOGIC;
+                             R_en2 : in STD_LOGIC;
+                             G_en2 : in STD_LOGIC;
+                             B_en2 : in STD_LOGIC;
 			     R_player : in STD_LOGIC;
 			     G_player : in STD_LOGIC;
 			     B_player : in STD_LOGIC;
@@ -152,7 +155,10 @@ begin
 	port map (R_en1 => R_en1,
 		  G_en1 => G_en1,
 		  B_en1 => B_en1,
-		  R_player => R_player,
+		  R_en2 => R_en2,
+		  G_en2 => G_en2,
+		  B_en2 => B_en2,
+                  R_player => R_player,
 		  G_player => G_player,
 		  B_player => B_player,
 		  R => R_in,

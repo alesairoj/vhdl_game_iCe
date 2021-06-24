@@ -7,6 +7,9 @@ entity selector is
 		     R_en1 : in STD_LOGIC;
 		     G_en1 : in STD_LOGIC;
 		     B_en1 : in STD_LOGIC;
+		     R_en2 : in STD_LOGIC;
+		     G_en2 : in STD_LOGIC;
+		     B_en2 : in STD_LOGIC;
 		     R_player : in STD_LOGIC;
 		     G_player : in STD_LOGIC;
 		     B_player : in STD_LOGIC;
@@ -22,12 +25,13 @@ entity selector is
 end selector;
 
 architecture Behavioral of selector is
-	signal player, enemigo1, RGB : STD_LOGIC_VECTOR ( 2 downto 0);
+	signal player, enemigo1, enemigo2, RGB : STD_LOGIC_VECTOR ( 2 downto 0);
 	signal enctud : STD_LOGIC;
 
 begin
 
-	enemigo1 <= R_en1 & G_en1 & B_en1;
+  enemigo1 <= R_en1 & G_en1 & B_en1;
+  enemigo2 <= R_en2 & G_en2 & B_en2;
 	player <= R_player & G_player & B_player;
 	R <= RGB(2);
 	G <= RGB(1);
@@ -38,8 +42,12 @@ begin
 	begin
 		if ( (enemigo1 /= "111") and (player /= "111")) then
 			RGB<="100"; --colision
-		else
-			RGB<= enemigo1 AND player; --no colision
+
+                elsif ( (enemigo2 /= "111") and (player /= "111")) then
+                        RGB<="100";
+                                           
+                else
+			RGB<= enemigo1 AND player AND enemigo2; --no colision
 		end if;
 	end process;
 
