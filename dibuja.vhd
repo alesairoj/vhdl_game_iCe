@@ -23,6 +23,12 @@ architecture Behavioral of dibuja is
         signal buttons : std_logic_vector(3 downto 0);
 	signal X, Y : unsigned (9 downto 0);
 
+        component biSR is
+                  port (
+                            status,notstatus : out std_logic;
+                                    clk, s, r : in std_logic);
+                end component;
+        
 begin
 
 	X <= unsigned(eje_x);
