@@ -17,22 +17,8 @@ end enemigo;
 
 architecture Behavioral of enemigo is
 	signal X, Y : unsigned (9 downto 0);
-	signal xini, yini : unsigned (9 downto 0);
-	signal xinivec, yinivec : STD_LOGIC_VECTOR ( 9 downto 0);
---	signal x2vec, y2vec : STD_LOGIC_VECTOR ( 9 downto 0);
-	signal x2, y2 : unsigned (9 downto 0);
-	signal enctud : STD_LOGIC;
-
-	component ctud is
-		Generic (Nbit : INTEGER :=8);
-		port( clk : in  STD_LOGIC;
-		      reset : in  STD_LOGIC;
-		      enable : in STD_LOGIC;
-		      resets : in STD_LOGIC;
-		      sentido : in  STD_LOGIC;
-		      Q : out  STD_LOGIC_VECTOR ((Nbit - 1) downto 0));
-	end component;
-
+	signal xini, yini : unsigned (8 downto 0);
+	signal xinivec, yinivec : STD_LOGIC_VECTOR ( 8 downto 0);
 
 	component contador is
 		Generic (Nbit : INTEGER :=8);
@@ -44,17 +30,8 @@ architecture Behavioral of enemigo is
 	end component;
 begin
 
-        contador_xini: ctud
-        generic map (Nbit => 10)
-        port map (clk => clk,
-                  reset => reset,
-                  resets => '0',
-                  enable => '1',
-                  sentido => '1',
-                  Q => xinivec
-          );
         contador_yini: contador
-        generic map (Nbit => 10)
+        generic map (Nbit => 9)
         port map (clk => clk,
                   reset => reset,
                   resets => '0',
@@ -62,28 +39,8 @@ begin
                   Q => yinivec
           );
 
---         enemigo2_xini: ctud
---           generic map (Nbit => 10)
---           port map (clk => clk,
---                     reset => reset,
---                     resets => '0',
---                     enable => '1',
---                     sentido => '1',
---                     Q => x2vec
---                     );
---         enemigo2_yini: contador
---           generic map (Nbit => 10)
---           port map (clk => clk,
---                     reset => reset,
---                     resets => '0',
---                     enable => '1',
---                     Q => y2vec
---                     );
-
--- y2 <= unsigned(yinivec)+30;
--- x2 <= unsigned(xinivec)+20;
 yini <= unsigned(yinivec)+desfase_y;
-xini <= unsigned(xinivec)+desfase_x;
+--xini <= "000000000"+(desfase_x);
 	X <= unsigned(eje_x);
 	Y <= unsigned(eje_y);
 
