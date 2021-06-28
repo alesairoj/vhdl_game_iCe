@@ -193,7 +193,7 @@ begin
 		  reset  => reset
 	  );
 	enemigo_instancia2: enemigo
-          generic map (desfase_x => 260,
+          generic map (desfase_x => 324,
                        desfase_y => 100)
           port map (eje_x => eje_x,
                     eje_y => eje_y,
