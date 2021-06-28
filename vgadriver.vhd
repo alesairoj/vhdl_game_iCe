@@ -57,6 +57,8 @@ architecture Behavioral of vga_driver is
 	end component;
 
 	component enemigo is
+          generic (desfase_x : integer :=260;
+                   desfase_y : INTEGER := 100);
 		Port (
 			     R : out STD_LOGIC;
 			     G : out STD_LOGIC;
@@ -180,6 +182,8 @@ begin
 	  );
 
 	enemigo_instancia: enemigo
+          generic map (desfase_x => 260,
+                       desfase_y => 0)
 	port map (eje_x => eje_x,
 		  eje_y => eje_y,
 		  R => R_en1,
@@ -188,6 +192,17 @@ begin
 		  clk => VSsignal,
 		  reset  => reset
 	  );
+	enemigo_instancia2: enemigo
+          generic map (desfase_x => 260,
+                       desfase_y => 100)
+          port map (eje_x => eje_x,
+                    eje_y => eje_y,
+                    R => R_en2,
+                    G => G_en2,
+                    B => B_en2,
+                    clk => VSsignal,
+                    reset  => reset
+                    );
 
 
 	div_frec:process(clk, reset)

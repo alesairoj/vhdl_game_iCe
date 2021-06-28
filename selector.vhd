@@ -38,14 +38,10 @@ begin
 	B <= RGB(0);
 	
 	
-	process(enemigo1, player)
+	process(enemigo1, player, enemigo2)
 	begin
-		if ( (enemigo1 /= "111") and (player /= "111")) then
+          if ( ((enemigo1 /= "111") and (player /= "111")) or ((player /= "111") and (enemigo2 /= "111"))) then
 			RGB<="100"; --colision
-
-                elsif ( (enemigo2 /= "111") and (player /= "111")) then
-                        RGB<="100";
-                                           
                 else
 			RGB<= enemigo1 AND player AND enemigo2; --no colision
 		end if;
