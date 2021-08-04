@@ -58,12 +58,13 @@ begin
                   sentido => button_right,
                   Q => xinivec
           );
-        contador_yini: contador
+        contador_yini: ctud
         generic map (Nbit => 10)
-        port map (clk => clk,
+        port map (clk => VS,
                   reset => reset,
                   resets => '0',
-                  enable => button_center,
+                  enable => '1',
+                  sentido => button_center,
                   Q => yinivec
           );
 
