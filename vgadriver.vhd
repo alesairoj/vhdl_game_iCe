@@ -80,6 +80,7 @@ architecture Behavioral of vga_driver is
 			     B : out STD_LOGIC;
 			     reset : in STD_LOGIC;
 			     clk : in STD_LOGIC;
+                             VS  : in STD_LOGIC;                             
 			     eje_x : in STD_LOGIC_VECTOR (9 downto 0);
 			     eje_y : in STD_LOGIC_VECTOR (9 downto 0));
 	end component;
@@ -177,6 +178,7 @@ begin
 		  B =>B_player,
 		  reset =>reset,
 		  clk =>clk,
+                  VS => VSsignal,
 		  eje_x =>eje_x,
 		  eje_y =>eje_y
 	  );

@@ -13,6 +13,7 @@ entity cuadrado is
 		     --		     xini : in unsigned (9 downto 0);
 		     --		     yini : in unsigned (9 downto 0);
 		     reset : in STD_LOGIC;
+                     VS  : in STD_LOGIC;
 		     clk : in STD_LOGIC;
 		     eje_x        : in STD_LOGIC_VECTOR (9 downto 0);
 		     eje_y        : in STD_LOGIC_VECTOR (9 downto 0));
@@ -50,7 +51,7 @@ begin
 
         contador_xini: ctud
         generic map (Nbit => 10)
-        port map (clk => clk,
+        port map (clk => VS,
                   reset => reset,
                   resets => '0',
                   enable => enctud,
@@ -66,7 +67,7 @@ begin
                   Q => yinivec
           );
 
-yini <= unsigned(yinivec);
+yini <= unsigned(yinivec)+420;
 xini <= unsigned(xinivec)+260;
 	X <= unsigned(eje_x);
 	Y <= unsigned(eje_y);
