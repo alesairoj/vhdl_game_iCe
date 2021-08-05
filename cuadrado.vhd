@@ -72,7 +72,7 @@ yini <= unsigned(yinivec)+420;
 xini <= unsigned(xinivec)+260;
 	X <= unsigned(eje_x);
 	Y <= unsigned(eje_y);
-	buttons <= button_left & button_center & button_right;
+	buttons <= button_left & not(button_center) & button_right;
 
 	process(X, Y)
 	begin
