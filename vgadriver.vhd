@@ -24,10 +24,10 @@ architecture Behavioral of vga_driver is
 	signal R_in, G_in, B_in : STD_LOGIC;
 	signal VSsignal : STD_LOGIC;
 
-	--Señales enemigos
+	--Señales de los elementos de la pantalla
 	signal R_en1, G_en1, B_en1, R_en2, G_en2, B_en2 : STD_LOGIC;
 	signal R_player, G_player, B_player : STD_LOGIC;
-
+        signal R_fon, G_fon, B_fon : STD_LOGIC;
 
 
 	signal eje_x, eje_y : STD_LOGIC_VECTOR (9 downto 0);
@@ -85,6 +85,15 @@ architecture Behavioral of vga_driver is
 			     eje_y : in STD_LOGIC_VECTOR (9 downto 0));
 	end component;
 
+        component fondo is
+            Port (
+              R            : out STD_LOGIC;
+              G            : out STD_LOGIC;
+              B            : out STD_LOGIC;
+              eje_x        : in STD_LOGIC_VECTOR (9 downto 0);
+              eje_y        : in STD_LOGIC_VECTOR (9 downto 0));
+          end component;
+
 	component selector is
 		Port (
 			     R_en1 : in STD_LOGIC;
@@ -93,6 +102,9 @@ architecture Behavioral of vga_driver is
                              R_en2 : in STD_LOGIC;
                              G_en2 : in STD_LOGIC;
                              B_en2 : in STD_LOGIC;
+                             R_fon : in STD_LOGIC;
+                             G_fon : in STD_LOGIC;
+                             B_fon : in STD_LOGIC;
 			     R_player : in STD_LOGIC;
 			     G_player : in STD_LOGIC;
 			     B_player : in STD_LOGIC;
@@ -161,6 +173,9 @@ begin
 		  R_en2 => R_en2,
 		  G_en2 => G_en2,
 		  B_en2 => B_en2,
+                  R_fon => R_fon,
+                  G_fon => G_fon,
+                  B_fon => B_fon,
                   R_player => R_player,
 		  G_player => G_player,
 		  B_player => B_player,
@@ -205,6 +220,15 @@ begin
                     clk => VSsignal,
                     reset  => reset
                     );
+
+        fondo_instancia: fondo
+          port map (
+            R            => R_fon,
+            G            => G_fon,
+            B            => B_fon,
+            eje_x        => eje_x,
+            eje_y        => eje_y
+            );
 
 
 	div_frec:process(clk, reset)

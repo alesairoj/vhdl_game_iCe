@@ -6,7 +6,7 @@ sim: tb_vgadriver.ghw
 %.o: %.vhd
 	ghdl -a $<
 
-tb_vgadriver: selector.o cuadrado.o contador.o comparador.o dibuja.o vgadriver.o tb_vgadriver.o ctud.o enemigo.o
+tb_vgadriver: selector.o cuadrado.o contador.o comparador.o dibuja.o vgadriver.o tb_vgadriver.o ctud.o enemigo.o fondo.o
 
 	ghdl -e tb_vgadriver
 
@@ -26,7 +26,7 @@ tb_ctud.ghw: tb_ctud
 
 # Synthesize
 top.json: top.vhd
-	yosys -m ghdl -p 'ghdl selector.vhd ctud.vhd enemigo.vhd contador.vhd comparador.vhd cuadrado.vhd vgadriver.vhd top.vhd -e top; synth_ice40 -json top.json'
+	yosys -m ghdl -p 'ghdl selector.vhd ctud.vhd enemigo.vhd fondo.vhd contador.vhd comparador.vhd cuadrado.vhd vgadriver.vhd top.vhd -e top; synth_ice40 -json top.json'
 
 # Place and route
 top.asc: top.json

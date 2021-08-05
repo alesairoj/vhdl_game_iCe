@@ -37,3 +37,7 @@ Contador simple para poder mover los elementos de la pantalla.
 + ctud.vhd:
 
 Contador mejorado, con sentido de cuenta y saturación.
+
++ fondo.vhd:
+
+Fork de dibuja.vhd, se encarga de dibujar el fondo de pantalla.
