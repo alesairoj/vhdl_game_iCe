@@ -57,8 +57,8 @@ architecture Behavioral of vga_driver is
 	end component;
 
 	component enemigo is
-          generic (desfase_x : integer :=260;
-                   desfase_y : INTEGER := 100);
+		generic (desfase_x : integer :=260;
+			 desfase_y : INTEGER := 100);
 		Port (
 			     R : out STD_LOGIC;
 			     G : out STD_LOGIC;
@@ -80,6 +80,7 @@ architecture Behavioral of vga_driver is
 			     B : out STD_LOGIC;
 			     reset : in STD_LOGIC;
 			     clk : in STD_LOGIC;
+			     VS : in STD_LOGIC;	
 			     eje_x : in STD_LOGIC_VECTOR (9 downto 0);
 			     eje_y : in STD_LOGIC_VECTOR (9 downto 0));
 	end component;
@@ -89,9 +90,9 @@ architecture Behavioral of vga_driver is
 			     R_en1 : in STD_LOGIC;
 			     G_en1 : in STD_LOGIC;
 			     B_en1 : in STD_LOGIC;
-                             R_en2 : in STD_LOGIC;
-                             G_en2 : in STD_LOGIC;
-                             B_en2 : in STD_LOGIC;
+			     R_en2 : in STD_LOGIC;
+			     G_en2 : in STD_LOGIC;
+			     B_en2 : in STD_LOGIC;
 			     R_player : in STD_LOGIC;
 			     G_player : in STD_LOGIC;
 			     B_player : in STD_LOGIC;
@@ -160,7 +161,7 @@ begin
 		  R_en2 => R_en2,
 		  G_en2 => G_en2,
 		  B_en2 => B_en2,
-                  R_player => R_player,
+		  R_player => R_player,
 		  G_player => G_player,
 		  B_player => B_player,
 		  R => R_in,
@@ -176,14 +177,15 @@ begin
 		  G =>G_player,
 		  B =>B_player,
 		  reset =>reset,
-		  clk =>clk,
+		  clk =>clk_pixel,
+		  VS => VSsignal,
 		  eje_x =>eje_x,
 		  eje_y =>eje_y
 	  );
 
 	enemigo_instancia: enemigo
-          generic map (desfase_x => 260,
-                       desfase_y => 0)
+	generic map (desfase_x => 260,
+		     desfase_y => 0)
 	port map (eje_x => eje_x,
 		  eje_y => eje_y,
 		  R => R_en1,
@@ -193,16 +195,16 @@ begin
 		  reset  => reset
 	  );
 	enemigo_instancia2: enemigo
-          generic map (desfase_x => 324,
-                       desfase_y => 100)
-          port map (eje_x => eje_x,
-                    eje_y => eje_y,
-                    R => R_en2,
-                    G => G_en2,
-                    B => B_en2,
-                    clk => VSsignal,
-                    reset  => reset
-                    );
+	generic map (desfase_x => 324,
+		     desfase_y => 100)
+	port map (eje_x => eje_x,
+		  eje_y => eje_y,
+		  R => R_en2,
+		  G => G_en2,
+		  B => B_en2,
+		  clk => VSsignal,
+		  reset  => reset
+	  );
 
 
 	div_frec:process(clk, reset)
