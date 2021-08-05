@@ -25,6 +25,7 @@ architecture Behavioral of cuadrado is
 	signal xini, yini : unsigned (9 downto 0);
 	signal xinivec, yinivec : STD_LOGIC_VECTOR ( 9 downto 0);
 	signal enctud : STD_LOGIC;
+        signal notbc : STD_LOGIC;
 
 	component ctud is
 		Generic (Nbit : INTEGER :=8);
@@ -64,15 +65,15 @@ begin
                   reset => reset,
                   resets => '0',
                   enable => '1',
-                  sentido => button_center,
+                  sentido => notbc,
                   Q => yinivec
           );
-
-yini <= unsigned(yinivec)+420;
+notbc <= not(button_center);
+yini <= unsigned(yinivec)+350;
 xini <= unsigned(xinivec)+260;
 	X <= unsigned(eje_x);
 	Y <= unsigned(eje_y);
-	buttons <= button_left & not(button_center) & button_right;
+	buttons <= button_left & button_center & button_right;
 
 	process(X, Y)
 	begin
