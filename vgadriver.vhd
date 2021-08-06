@@ -57,8 +57,8 @@ architecture Behavioral of vga_driver is
 	end component;
 
 	component enemigo is
-          generic (desfase_x : integer :=260;
-                   desfase_y : INTEGER := 100);
+		generic (desfase_x : integer :=260;
+			 desfase_y : INTEGER := 100);
 		Port (
 			     R : out STD_LOGIC;
 			     G : out STD_LOGIC;
@@ -99,6 +99,7 @@ architecture Behavioral of vga_driver is
 			     R_en1 : in STD_LOGIC;
 			     G_en1 : in STD_LOGIC;
 			     B_en1 : in STD_LOGIC;
+<<<<<<< HEAD
                              R_en2 : in STD_LOGIC;
                              G_en2 : in STD_LOGIC;
                              B_en2 : in STD_LOGIC;
@@ -173,10 +174,14 @@ begin
 		  R_en2 => R_en2,
 		  G_en2 => G_en2,
 		  B_en2 => B_en2,
+<<<<<<< HEAD
                   R_fon => R_fon,
                   G_fon => G_fon,
                   B_fon => B_fon,
                   R_player => R_player,
+=======
+		  R_player => R_player,
+>>>>>>> origin/alejandro-dev
 		  G_player => G_player,
 		  B_player => B_player,
 		  R => R_in,
@@ -199,8 +204,8 @@ begin
 	  );
 
 	enemigo_instancia: enemigo
-          generic map (desfase_x => 260,
-                       desfase_y => 0)
+	generic map (desfase_x => 260,
+		     desfase_y => 0)
 	port map (eje_x => eje_x,
 		  eje_y => eje_y,
 		  R => R_en1,
@@ -210,16 +215,16 @@ begin
 		  reset  => reset
 	  );
 	enemigo_instancia2: enemigo
-          generic map (desfase_x => 324,
-                       desfase_y => 100)
-          port map (eje_x => eje_x,
-                    eje_y => eje_y,
-                    R => R_en2,
-                    G => G_en2,
-                    B => B_en2,
-                    clk => VSsignal,
-                    reset  => reset
-                    );
+	generic map (desfase_x => 324,
+		     desfase_y => 100)
+	port map (eje_x => eje_x,
+		  eje_y => eje_y,
+		  R => R_en2,
+		  G => G_en2,
+		  B => B_en2,
+		  clk => VSsignal,
+		  reset  => reset
+	  );
 
         fondo_instancia: fondo
           port map (
