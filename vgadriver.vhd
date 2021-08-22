@@ -99,7 +99,6 @@ architecture Behavioral of vga_driver is
 			     R_en1 : in STD_LOGIC;
 			     G_en1 : in STD_LOGIC;
 			     B_en1 : in STD_LOGIC;
-<<<<<<< HEAD
                              R_en2 : in STD_LOGIC;
                              G_en2 : in STD_LOGIC;
                              B_en2 : in STD_LOGIC;
@@ -174,14 +173,10 @@ begin
 		  R_en2 => R_en2,
 		  G_en2 => G_en2,
 		  B_en2 => B_en2,
-<<<<<<< HEAD
                   R_fon => R_fon,
                   G_fon => G_fon,
                   B_fon => B_fon,
                   R_player => R_player,
-=======
-		  R_player => R_player,
->>>>>>> origin/alejandro-dev
 		  G_player => G_player,
 		  B_player => B_player,
 		  R => R_in,

@@ -15,7 +15,6 @@ entity cuadrado is
 		     reset : in STD_LOGIC;
                      VS  : in STD_LOGIC;
 		     clk : in STD_LOGIC;
-		     VS : in STD_LOGIC;
 		     eje_x        : in STD_LOGIC_VECTOR (9 downto 0);
 		     eje_y        : in STD_LOGIC_VECTOR (9 downto 0));
 end cuadrado;
@@ -67,7 +66,7 @@ begin
 
 	enctud <= button_left XOR button_right;
 -- INICIO DEL CONFLICTO
-<<<<<<< HEAD
+
 
         contador_yini: ctud
         generic map (Nbit => 10)
@@ -81,7 +80,7 @@ begin
 notbc <= not(button_center);
 yini <= unsigned(yinivec)+350;
 xini <= unsigned(xinivec)+260;
-=======
+
 	contador_xini: ctud
 	generic map (Nbit => 10)
 	port map (clk => clk,
@@ -91,14 +90,7 @@ xini <= unsigned(xinivec)+260;
 		  sentido => button_right,
 		  Q => xinivec
 	  );
-	contador_yini: contador
-	generic map (Nbit => 10)
-	port map (clk => clk,
-		  reset => reset,
-		  resets => '0',
-		  enable => button_center,
-		  Q => yinivec
-	  );
+
 	--Memoria imagen coche
 	contador_pixelmem: contador
 	generic map (Nbit => 10)
@@ -118,9 +110,6 @@ xini <= unsigned(xinivec)+260;
 		  datao => mem_data
 	  );
 
-	yini <= unsigned(yinivec);
-	xini <= unsigned(xinivec)+260;
->>>>>>> origin/alejandro-dev
 -- FIN DEL CONFLICTO
 	X <= unsigned(eje_x);
 	Y <= unsigned(eje_y);
