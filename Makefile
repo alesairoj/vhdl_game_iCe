@@ -6,18 +6,18 @@ sim: tb_vgadriver.ghw
 %.o: %.vhd
 	ghdl -a $<
 
-tb_vgadriver: car.o selector.o cuadrado.o contador.o comparador.o dibuja.o vgadriver.o tb_vgadriver.o ctud.o enemigo.o
+tb_vgadriver: pseudo.o gameover.o gameover_ram.o fondo.o fondo1.o coche.o selector.o cuadrado.o contador.o comparador.o dibuja.o vgadriver.o tb_vgadriver.o ctud.o enemigo.o
 
 	ghdl -e tb_vgadriver
 
 tb_vgadriver.ghw: tb_vgadriver
 	./tb_vgadriver --wave=tb_vgadriver.ghw --stop-time=20ms
 
-tb_ctud: car.o cuadrado.o contador.o comparador.o dibuja.o vgadriver.o tb_vgadriver.o ctud.o tb_ctud.o
-	ghdl -e tb_ctud
-
-tb_ctud.ghw: tb_ctud
-	./tb_ctud --wave=tb_ctud.ghw --stop-time=350ms
+#tb_ctud: car.o cuadrado.o contador.o comparador.o dibuja.o vgadriver.o tb_vgadriver.o ctud.o tb_ctud.o
+#	ghdl -e tb_ctud
+#
+#tb_ctud.ghw: tb_ctud
+#	./tb_ctud --wave=tb_ctud.ghw --stop-time=350ms
 
 
 # Generate simulation executable
@@ -26,7 +26,7 @@ tb_ctud.ghw: tb_ctud
 
 # Synthesize
 top.json: top.vhd
-	yosys -m ghdl -p 'ghdl car.vhd selector.vhd ctud.vhd enemigo.vhd contador.vhd comparador.vhd cuadrado.vhd vgadriver.vhd top.vhd -e top; synth_ice40 -json top.json'
+	yosys -m ghdl -p 'ghdl pseudo.vhd gameover.vhd gameover_ram.vhd fondo.vhd fondo1.vhd coche.vhd selector.vhd ctud.vhd enemigo.vhd contador.vhd comparador.vhd cuadrado.vhd vgadriver.vhd top.vhd -e top; synth_ice40 -json top.json'
 
 # Place and route
 top.asc: top.json

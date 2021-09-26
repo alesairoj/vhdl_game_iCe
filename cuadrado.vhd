@@ -27,7 +27,7 @@ architecture Behavioral of cuadrado is
 	signal enable_mem_cont : STD_LOGIC;
 	signal enctud : STD_LOGIC;
 	signal mem_cont : unsigned (9 downto 0);
-	signal mem_data : STD_LOGIC_VECTOR (8 downto 0); 
+	signal mem_data : STD_LOGIC_VECTOR (2 downto 0); 
 
 	component ctud is
 		Generic (Nbit : INTEGER :=8);
@@ -49,9 +49,9 @@ architecture Behavioral of cuadrado is
 		      Q : out  STD_LOGIC_VECTOR ((Nbit - 1) downto 0));
 	end component;
 
-	component car is 
+	component coche is 
 		generic (
-				DATA_WIDTH : integer := 9 ;
+				DATA_WIDTH : integer := 3 ;
 				ADDR_WIDTH : integer := 10 );
 		port (clk   : in  std_logic;
 		      addri : in  unsigned (ADDR_WIDTH-1 downto 0);
@@ -66,19 +66,20 @@ begin
 
 	contador_xini: ctud
 	generic map (Nbit => 10)
-	port map (clk => clk,
+	port map (clk => VS,
 		  reset => reset,
 		  resets => '0',
 		  enable => enctud,
 		  sentido => button_right,
 		  Q => xinivec
 	  );
-	contador_yini: contador
+	contador_yini: ctud
 	generic map (Nbit => 10)
-	port map (clk => clk,
+	port map (clk => VS,
 		  reset => reset,
 		  resets => '0',
-		  enable => button_center,
+		  enable => '1',
+		  sentido => button_center,
 		  Q => yinivec
 	  );
 	--Memoria imagen coche
@@ -92,7 +93,7 @@ begin
 	  );
 	mem_cont <= unsigned(mem_cont_vector) + 1;
 
-	memoria_coche: car
+	memoria_coche: coche
 	port map (clk => clk,
 		  addri => mem_cont,
 		  datai => mem_data,
@@ -100,31 +101,16 @@ begin
 		  datao => mem_data
 	  );
 
-	yini <= unsigned(yinivec);
-	xini <= unsigned(xinivec)+260;
+	yini <= 400 - unsigned(yinivec);
+	xini <= unsigned(xinivec)+40;
 	X <= unsigned(eje_x);
 	Y <= unsigned(eje_y);
 	--buttons <= button_left & button_center & button_right;
 
 	process(X, Y)
 	begin
-		--           case buttons is
-		--               when "0000" =>
-		--                   R <= '1'; G <= '0'; B <= '0';
-		--               when "0001" =>
-		--                   R <= '0'; G <= '1'; B <= '0';
-		--               when "0010" =>
-		--                   R <= '0'; G <= '0'; B <= '1';
-		--               when "0100" =>
-		--                   R <= '0'; G <= '1'; B <= '1';
-		--               when "1000" =>
-		--                   R <= '1'; G <= '1'; B <= '0';
-		--               when others =>
-		--                   R <= '1'; G <= '1'; B <= '1';
-		--           end case;
-
 		if (X > xini) AND (X < (xini + 33)) AND (Y > yini) AND (Y < (yini + 33)) then
-			R <= NOT mem_data(0); G <=  NOT mem_data(3); B <= NOT mem_data(6) ;
+			R <= mem_data(2); G <= mem_data(1); B <= mem_data(0) ;
 			enable_mem_cont <= '1';
 		else
 			R <= '1'; G <= '1'; B <= '1';

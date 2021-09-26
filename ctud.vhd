@@ -37,7 +37,7 @@ begin
     elsif (enable = '1') then
       if (sentido = '1') then
 
-        if (salida = "111111") then
+        if (salida >= 80) then
 
           p_salida <= salida;
         else
@@ -45,7 +45,7 @@ begin
         end if;
       --p_salida <= salida + 1;
       else
-        if (salida = "000000") then
+        if (salida = "0000000") then
           p_salida <= salida;
         else
           p_salida <= salida - 1;
