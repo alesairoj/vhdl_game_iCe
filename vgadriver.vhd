@@ -24,13 +24,12 @@ architecture Behavioral of vga_driver is
 	signal R_in, G_in, B_in : STD_LOGIC;
 	signal VSsignal : STD_LOGIC;
 
-	--Señales de los elementos de la pantalla
-	signal R_en1, G_en1, B_en1, R_en2, G_en2, B_en2 : STD_LOGIC;
-	signal R_player, G_player, B_player : STD_LOGIC;
-        signal R_fon, G_fon, B_fon : STD_LOGIC;
-
+	--Señales enemigos
+	signal R_en1, G_en1, B_en1, R_en2, G_en2, B_en2, R_en3, G_en3, B_en3 : STD_LOGIC;
+	signal R_player, G_player, B_player, R_fondo, G_fondo, B_fondo, R_gameover, G_gameover, B_gameover, gameover_en : STD_LOGIC;
 
 	signal eje_x, eje_y : STD_LOGIC_VECTOR (9 downto 0);
+	signal random : STD_LOGIC_VECTOR (7 downto 0);
 
 	component contador is
 		Generic (Nbit : INTEGER := 8);
@@ -57,18 +56,49 @@ architecture Behavioral of vga_driver is
 	end component;
 
 	component enemigo is
-          generic (desfase_x : integer :=260;
-                   desfase_y : INTEGER := 100);
+		generic (desfase_x : integer :=260;
+			 desfase_y : INTEGER := 100);
 		Port (
 			     R : out STD_LOGIC;
 			     G : out STD_LOGIC;
 			     B : out STD_LOGIC;
 			     reset : in STD_LOGIC;
 			     clk : in STD_LOGIC;
+			     VS : in STD_LOGIC;
+			     random : in STD_LOGIC_VECTOR (7 downto 0);
 			     eje_x : in STD_LOGIC_VECTOR (9 downto 0);
 			     eje_y : in STD_LOGIC_VECTOR (9 downto 0));
 	end component;
 
+        component fondo is
+                Port (
+                             R : out STD_LOGIC;
+                             G : out STD_LOGIC;
+                             B : out STD_LOGIC;
+                             reset : in STD_LOGIC;
+                             clk : in STD_LOGIC;
+                             VS : in STD_LOGIC;
+                             eje_x : in STD_LOGIC_VECTOR (9 downto 0);
+                             eje_y : in STD_LOGIC_VECTOR (9 downto 0));
+        end component;
+
+        component gameover is
+                Port (
+                             R : out STD_LOGIC;
+                             G : out STD_LOGIC;
+                             B : out STD_LOGIC;
+                             reset : in STD_LOGIC;
+                             clk : in STD_LOGIC;
+                             eje_x : in STD_LOGIC_VECTOR (9 downto 0);
+                             eje_y : in STD_LOGIC_VECTOR (9 downto 0));
+        end component;
+
+        component random_gen is
+                Port (
+                             clk : in STD_LOGIC;
+                             reset : in STD_LOGIC;
+                             random : out STD_LOGIC_VECTOR (7 downto 0));
+        end component;
 
 	component cuadrado is
 		Port (
@@ -80,34 +110,32 @@ architecture Behavioral of vga_driver is
 			     B : out STD_LOGIC;
 			     reset : in STD_LOGIC;
 			     clk : in STD_LOGIC;
-                             VS  : in STD_LOGIC;                             
+			     VS : in STD_LOGIC;	
 			     eje_x : in STD_LOGIC_VECTOR (9 downto 0);
 			     eje_y : in STD_LOGIC_VECTOR (9 downto 0));
 	end component;
-
-        component fondo is
-            Port (
-              R            : out STD_LOGIC;
-              G            : out STD_LOGIC;
-              B            : out STD_LOGIC;
-              eje_x        : in STD_LOGIC_VECTOR (9 downto 0);
-              eje_y        : in STD_LOGIC_VECTOR (9 downto 0));
-          end component;
 
 	component selector is
 		Port (
 			     R_en1 : in STD_LOGIC;
 			     G_en1 : in STD_LOGIC;
 			     B_en1 : in STD_LOGIC;
-                             R_en2 : in STD_LOGIC;
-                             G_en2 : in STD_LOGIC;
-                             B_en2 : in STD_LOGIC;
-                             R_fon : in STD_LOGIC;
-                             G_fon : in STD_LOGIC;
-                             B_fon : in STD_LOGIC;
+			     R_en2 : in STD_LOGIC;
+			     G_en2 : in STD_LOGIC;
+			     B_en2 : in STD_LOGIC;
+                             R_en3 : in STD_LOGIC;
+                             G_en3 : in STD_LOGIC;
+                             B_en3 : in STD_LOGIC;
 			     R_player : in STD_LOGIC;
 			     G_player : in STD_LOGIC;
 			     B_player : in STD_LOGIC;
+                             R_fondo : in STD_LOGIC;
+                             G_fondo : in STD_LOGIC;
+                             B_fondo : in STD_LOGIC;
+                             R_gameover : in STD_LOGIC;
+                             G_gameover : in STD_LOGIC;
+                             B_gameover : in STD_LOGIC;
+                             gameover_en : in STD_LOGIC;
 			     R            : out STD_LOGIC;
 			     G            : out STD_LOGIC;
 			     B            : out STD_LOGIC);
@@ -173,12 +201,19 @@ begin
 		  R_en2 => R_en2,
 		  G_en2 => G_en2,
 		  B_en2 => B_en2,
-                  R_fon => R_fon,
-                  G_fon => G_fon,
-                  B_fon => B_fon,
-                  R_player => R_player,
+                  R_en3 => R_en3,
+                  G_en3 => G_en3,
+                  B_en3 => B_en3,
+		  R_player => R_player,
 		  G_player => G_player,
 		  B_player => B_player,
+                  R_fondo=> R_fondo,
+                  G_fondo => G_fondo,
+                  B_fondo => B_fondo,
+                  R_gameover => R_gameover,
+                  G_gameover => G_gameover,
+                  B_gameover => B_gameover,
+                  gameover_en => gameover_en,
 		  R => R_in,
 		  G => G_in,
 		  B => B_in
@@ -192,43 +227,79 @@ begin
 		  G =>G_player,
 		  B =>B_player,
 		  reset =>reset,
-		  clk =>clk,
-                  VS => VSsignal,
+		  clk =>clk_pixel,
+		  VS => VSsignal,
 		  eje_x =>eje_x,
 		  eje_y =>eje_y
 	  );
 
 	enemigo_instancia: enemigo
-          generic map (desfase_x => 260,
-                       desfase_y => 0)
+	generic map (desfase_x => 50,
+		     desfase_y => 0)
 	port map (eje_x => eje_x,
 		  eje_y => eje_y,
 		  R => R_en1,
 		  G => G_en1,
 		  B => B_en1,
-		  clk => VSsignal,
+                  clk =>clk_pixel,
+                  VS => VSsignal,
+                  random => random,
 		  reset  => reset
 	  );
 	enemigo_instancia2: enemigo
-          generic map (desfase_x => 324,
-                       desfase_y => 100)
-          port map (eje_x => eje_x,
-                    eje_y => eje_y,
-                    R => R_en2,
-                    G => G_en2,
-                    B => B_en2,
-                    clk => VSsignal,
-                    reset  => reset
-                    );
+	generic map (desfase_x => 80,
+		     desfase_y => 180)
+	port map (eje_x => eje_x,
+		  eje_y => eje_y,
+		  R => R_en2,
+		  G => G_en2,
+		  B => B_en2,
+		  clk =>clk_pixel,
+                  VS => VSsignal,
+                  random => random,
+		  reset  => reset
+	  );
+        enemigo_instancia3: enemigo
+        generic map (desfase_x => 110,
+                     desfase_y => 90)
+        port map (eje_x => eje_x,
+                  eje_y => eje_y,
+                  R => R_en3,
+                  G => G_en3,
+                  B => B_en3,
+                  clk =>clk_pixel,
+                  VS => VSsignal,
+                  random => random,
+                  reset  => reset
+          );
+
 
         fondo_instancia: fondo
-          port map (
-            R            => R_fon,
-            G            => G_fon,
-            B            => B_fon,
-            eje_x        => eje_x,
-            eje_y        => eje_y
-            );
+        port map (eje_x => eje_x,
+                  eje_y => eje_y,
+                  R => R_fondo,
+                  G => G_fondo,
+                  B => B_fondo,
+                  clk =>clk_pixel,
+                  VS => VSsignal,
+                  reset  => reset
+          );
+
+        gameover_instancia: gameover
+        port map (eje_x => eje_x,
+                  eje_y => eje_y,
+                  R => R_gameover,
+                  G => G_gameover,
+                  B => B_gameover,
+                  clk =>clk_pixel,
+                  reset  => reset
+          );
+
+        random_gen_instancia: random_gen
+        port map (clk =>clk_pixel,
+                  reset  => reset,
+		  random => random
+          );
 
 
 	div_frec:process(clk, reset)
@@ -246,6 +317,16 @@ begin
 			R <= '0'; G <= '0'; B <= '0';
 		else
 			R <= R_in; G <= G_in; B <= B_in;
+		end if;
+	end process;
+
+	gameover_biestable:process (R_in, G_in, B_in)
+	begin
+		if reset='1' then
+			gameover_en <='0';
+		elsif ((R_in='1') AND (G_in='0') AND (B_in='0')) AND rising_edge (clk_pixel) then
+			--colision
+			gameover_en <='1';
 		end if;
 	end process;
 

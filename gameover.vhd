@@ -2,31 +2,30 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-entity fondo is
+entity gameover is
 	Port (
 		     R            : out STD_LOGIC;
 		     G            : out STD_LOGIC;
 		     B            : out STD_LOGIC;
 		     reset : in STD_LOGIC;
 		     clk : in STD_LOGIC;
-                     VS : in STD_LOGIC;
 		     eje_x        : in STD_LOGIC_VECTOR (9 downto 0);
 		     eje_y        : in STD_LOGIC_VECTOR (9 downto 0));
-end fondo;
+end gameover;
 
-architecture Behavioral of fondo is
+architecture Behavioral of gameover is
 	signal X, Y : unsigned (9 downto 0);
 	--signal xini, yini : unsigned (8 downto 0);
 	--signal xinivec, yinivec : STD_LOGIC_VECTOR ( 8 downto 0);
-	signal mem_cont_vector : STD_LOGIC_VECTOR (12 downto 0);
+	signal mem_cont_vector : STD_LOGIC_VECTOR (11 downto 0);
         signal enable_mem_cont : STD_LOGIC;
-	signal mem_cont : unsigned (12 downto 0);
+	signal mem_cont : unsigned (11 downto 0);
 	signal mem_data : STD_LOGIC_VECTOR (2 downto 0);
 
-	component fondo1 is
+	component gameover_ram is
 		Generic (
 				DATA_WIDTH : integer := 3;
-				ADDR_WIDTH : integer := 13 );
+				ADDR_WIDTH : integer := 12 );
 		port (clk   : in  std_logic;
 		      addri : in  unsigned (ADDR_WIDTH-1 downto 0);
 		      datai : in  std_logic_vector (DATA_WIDTH-1 downto 0);
@@ -55,7 +54,7 @@ begin
 --  );
 
 	contador_pixelmem: contador
-        generic map (Nbit => 13)
+        generic map (Nbit => 12)
         port map (clk => clk,
                   reset => reset,
                   resets => '0',
@@ -64,7 +63,7 @@ begin
           );
         mem_cont <= unsigned(mem_cont_vector) + 1;
 
-	memoria_fondo: fondo1
+	memoria_gameover: gameover_ram
         port map (clk => clk,
                   addri => mem_cont,
                   datai => mem_data,
@@ -79,14 +78,11 @@ begin
 	Y <= unsigned(eje_y);
 	process(X, Y)
 	begin
-                if (X > 200) AND (X < ( 200+ 257)) AND (200 > Y) AND (200 < (Y + 33)) then
+                if (X > 250) AND (X < ( 250+ 65)) AND (300 > Y) AND (300 < (Y + 65)) then
                         R <= mem_data(2); G <= mem_data(1); B <= mem_data(0) ;
                         enable_mem_cont <= '1';
 		elsif (X > 200) then
                         R <= '0'; G <= '0'; B <= '1';
-                        enable_mem_cont <= '0';
-		elsif ((X = 40) OR (X = 152)) then
-                        R <= '0'; G <= '0'; B <= '0';
                         enable_mem_cont <= '0';
 		else
                         R <= '1'; G <= '1'; B <= '1';
